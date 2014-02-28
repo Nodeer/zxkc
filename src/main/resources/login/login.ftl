@@ -32,12 +32,24 @@
 </script>
 </head>
 <body>
-	<div id="loginDiv" style="text-align:center; position:absolute; left:400px; top:200px; height:200px">	
+<div id="content" style="text-align:center">
+	<div id="loginDiv" style="text-align:center; position:relative; top:200px">	
 		<form action="/zxkc/login.shtml" id="loginForm">
-			用户名：<input type="text" id="username" name="username"/>
-			密码：<input type="text" id="password" name="password" onKeyPress="fnEnterLogin(event)"/>
-			<input type="button" id="loginBtn" onclick="fnLogin()" value="登录"/> 
+			<table style="border:none; width:100%">
+				<tr>
+					<td style="text-align:right; width:45%">用户名：</td>
+					<td style="text-align:left; width:55%"><input type="text" style="width:180px" id="username" name="username"/></td>
+				</tr>
+				<tr>
+					<td style="text-align:right; width:45%">密码：</td>
+					<td style="text-align:left; width:55%"><input type="password" style="width:180px "id="password" name="password" onKeyPress="fnEnterLogin(event)"/></td>
+				</tr>
+				<tr>
+					<td style="text-align:center" colspan="2"><input type="button" id="loginBtn" onclick="fnLogin()" value="登录"/></td>
+				</tr>
+			</table>
 		</form>
 	</div>
+</div>
 </body>
 </html>
