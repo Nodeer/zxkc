@@ -66,10 +66,32 @@ public class ZxkcHplrAction extends ActionSupport<ZxkcHplrVo, ZxkcHplrManager>{
     }
     
     public String queryHpxxByMc() {
-	jsonMap.put("hpxxList", manager.queryHpxxByMc(model.getHpmc()));
-	jsonMap.put("success", true);
-	return SUCCESS;
+		jsonMap.put("hpxxList", manager.queryHpxxByMc(model.getHpmc()));
+		jsonMap.put("success", true);
+		return SUCCESS;
     }
     
+    /**
+     * 查询所有单问
+     * @return
+     */
+    public String loadUnit() {
+    	jsonMap.put("unitList", manager.listUnit(model.getHpbh()));
+    	return SUCCESS;
+    }
     
+    /**
+     * 根据货品编号获取单位
+     * @return
+     */
+    public String getDwByHpbh() {
+    	jsonMap.put("dw", manager.getDwByhpbh(model.getHpbh()));
+    	return SUCCESS;
+    }
+    
+    public String loadRy() {
+    	jsonMap.put("ryList", manager.listRy());
+    	return SUCCESS;
+    }
+
 }

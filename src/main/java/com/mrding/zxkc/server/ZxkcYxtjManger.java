@@ -42,10 +42,14 @@ public class ZxkcYxtjManger {
 
 	private Map<String, Object> convertToMap(Object[] objs, List<Object[]> dmList) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("hpmc", objs[0]);
+		map.put("hpbh", objs[0]);
+		map.put("hpmc", objs[1]);
+		map.put("bzgg", objs[2]);
+		map.put("dj", objs[3]);
+		map.put("dwmc", objs[4]);
 		if (CommonUtils.listIsNotBlank(dmList)) {
 			for (int i = 0, max = dmList.size(); i < max; i++) {
-				map.put((String) dmList.get(i)[0], objs[i + 1]);
+				map.put((String) dmList.get(i)[0], objs[i + 5]);
 			}
 		}
 		return map;

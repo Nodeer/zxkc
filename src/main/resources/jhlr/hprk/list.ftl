@@ -15,18 +15,26 @@
 			}
 		}
 		
+		var hpbhComboBox = new Ext.form.ComboBox({
+		    store:hpbhSelectStore, triggerAction:"all", id:"hpbh", fieldLabel:"货品名称", emptyText:"请选择", mode:"local", valueField:"hpbh", displayField:"hpmc",
+		    listeners: {
+			    change:function(combo, newValue, oldValue) {
+					unitStore.load({params:{hpbh:newValue}});
+			    }
+		    }
+		});
+		
 		var hprkCm = new Ext.grid.ColumnModel([
-			{header:"货品名称", dataIndex:"hpbh", width:150, editor:hpbhSelect, renderer:Ext.util.Format.comboRenderer(hpbhSelect)},
-			{header:"供货商名称", dataIndex:"ghsmc", width:150, editor:new Ext.form.TextField({})},
-			{header:"单位类型", dataIndex:"dw", editor:dwSelect, renderer:Ext.util.Format.comboRenderer(dwSelect)},
+			{header:"货品名称", dataIndex:"hpbh", width:150, editor:hpbhComboBox, renderer:Ext.util.Format.comboRenderer(hpbhComboBox)},
+			{header:"单位", dataIndex:"dw", editor:unitComboBox, renderer:Ext.util.Format.comboRenderer(unitComboBox)},
 			{header:"货品数量", dataIndex:"hpsl", editor:new Ext.form.NumberField({allowBlank:false, precision:2})},
 			{header:"店面", dataIndex:"ck", editor:ckSelect, renderer:Ext.util.Format.comboRenderer(ckSelect)},
-			{header:"入库人", dataIndex:"rkr", editor:new Ext.form.TextField({allowBlank:false})},
+			{header:"入库人", dataIndex:"rkr", editor:ryComboBox, renderer:Ext.util.Format.comboRenderer(ryComboBox)},
 			{header:"入库时间", dataIndex:"rksj", sortable:true, editor:new Ext.form.DateField({allowBlank:false, format:"Y-m-d"}), renderer:new Ext.util.Format.dateRenderer('Y-m-d')},
 			{header:"备注", dataIndex:"bz", editor:new Ext.form.TextField({})}
 		]);
 		
-		var colArray = [{name:"hpbh"}, {name:"ghsmc"}, {name:"hpsl"}, {name:"dw"}, {name:"ck"}, {name:"rkr"}, {name:"rksj"}, {name:"bz"}];
+		var colArray = [{name:"hpbh"}, {name:"hpsl"}, {name:"dw"}, {name:"ck"}, {name:"rkr"}, {name:"rksj"}, {name:"bz"}];
 		
 		var HprkRecord = Ext.data.Record.create(colArray);
 		
@@ -43,7 +51,7 @@
             tbar:new Ext.Toolbar(["-", {
                 text:"添加一行", 
                 handler:function(){
-                	var row = new HprkRecord({ hpbh:"", ghsmc:"", hpsl:"", ck:"", dwlx:"", rkr:"", rksj:""});
+                	var row = new HprkRecord({ hpbh:"", hpsl:"", ck:"", dw:"", rkr:"", rksj:"", bz:""});
                 	hprkList.stopEditing();
                 	hprkList.getStore().insert(0, row);
                 	hprkList.startEditing(0, 0);
@@ -84,18 +92,22 @@
                         Ext.Msg.alert("系统提示", "请先录入入库信息！");
                         return ;
 					}
-					Ext.Ajax.request({url:"${ctxPath}/jhlr/hprk_saveHprkList.shtml",
-						params:{data:encodeURIComponent(Ext.encode(dataArray))},
-						success:function(response) {
-							var data = Ext.decode(response.responseText);
-							if (data.success) {
-								Ext.Msg.alert("系统提示", "保存成功！");
-								hprkList.getStore().removeAll();
-							} else {
-								Ext.Msg.alert("系统提示", "保存失败！");
-							}
-						}
-					});
+            		Ext.Msg.confirm("系统提示", "确认保存？", function(opt){
+            			if (opt == "yes") {
+							Ext.Ajax.request({url:"${ctxPath}/jhlr/hprk_saveHprkList.shtml",
+								params:{data:encodeURIComponent(Ext.encode(dataArray))},
+								success:function(response) {
+									var data = Ext.decode(response.responseText);
+									if (data.success) {
+										Ext.Msg.alert("系统提示", "保存成功！");
+										hprkList.getStore().removeAll();
+									} else {
+										Ext.Msg.alert("系统提示", "保存失败！");
+									}
+								}
+							});
+            			}
+            		})
             	}
             }, "-"])
         });
@@ -110,7 +122,7 @@
         		return ;
         	}
         	if (fnIsBlank(record.get("dw"))) {
-        		Ext.Msg.alert("系统提示", "单位类型不能为空！");
+        		Ext.Msg.alert("系统提示", "单位不能为空！");
         		return ;
         	}
         	if (fnIsBlank(record.get("ck"))) {

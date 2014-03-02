@@ -23,25 +23,28 @@ public class ZxkcYxtjDao {
 	 * @return
 	 */
 	public List<Object[]> queryYxtjList(ZxkcYxtjVo model) {
-		return DaoUtils.queryBySql("select b.HPMC, " +
+		return DaoUtils.queryBySql("select b.HPBH,b.HPMC,b.BZGG,b.DJ,c.DWMC " +
 				createYxtjSqlHead(model.getDmList(), model.getDwlx()) +
-                " from zxkc_yw_hpck a" +
-                " left join zxkc_yw_hpxx b on a.HPBH=b.HPBH and b.DR=0 " +
-                " where a.DR=0 and a.CKYY='xs'" +
+				" from zxkc_yw_hpck a" +
+				" left join zxkc_yw_hpxx b on a.HPBH=b.HPBH and b.DR=0" +
+				" left join zxkc_dm_dw c on b.DW=c.DWDM and c.DR=0" +
+				" where a.DR=0" +
                 (model.getHpbh() != null && !String.valueOf(model.getHpbh()).equals("") ? DaoUtils.sqlEq("a.HPBH", model.getHpbh()) : "") +
                 (CommonUtils.isNotBlank(model.getQsrq_str()) ? DaoUtils.sqlGe("a.CKSJ", model.getQsrq_str()) : "") +
                 (CommonUtils.isNotBlank(model.getJzrq_str()) ? DaoUtils.sqlLe("a.CKSJ", model.getJzrq_str()) : "") +
-                " group by b.HPMC", DSFactory.CURRENT);
+				" group by b.HPBH,b.HPMC,b.BZGG,b.DJ,c.DWMC" +
+				" order by b.HPBH", 
+				DSFactory.CURRENT);
 	}
 
 	private String createYxtjSqlHead(List<Object[]> dmList, String dwlx) {
 		StringBuilder head = new StringBuilder("");
 		if (CommonUtils.listIsNotBlank(dmList)) {
 			for (Object[] objs : dmList) {
-				head.append(" sum(case when a.CK='" + (String) objs[0] + "' then " + fitHpsl(dwlx) + " else 0 end) as '" + (String) objs[1] + "',");
+				head.append(", sum(case when a.CK='" + (String) objs[0] + "' then " + fitHpsl(dwlx) + " else 0 end) as '" + (String) objs[1] + "'");
 			}
 		}
-		return head.substring(0, head.length() - 1);
+		return head.toString();
 	}
 
 	private String fitHpsl(String dwlx) {

@@ -65,6 +65,57 @@ LOCK TABLES `zxkc_dm_ckyy` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `zxkc_dm_dw`
+--
+
+DROP TABLE IF EXISTS `zxkc_dm_dw`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zxkc_dm_dw` (
+  `DWDM` varchar(10) NOT NULL,
+  `DWMC` varchar(10) DEFAULT NULL,
+  `DR` int(11) NOT NULL,
+  `TS` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `zxkc_dm_dw`
+--
+
+LOCK TABLES `zxkc_dm_dw` WRITE;
+/*!40000 ALTER TABLE `zxkc_dm_dw` DISABLE KEYS */;
+INSERT INTO `zxkc_dm_dw` VALUES ('g','g',0,'2014-02-28 16:49:01'),('kg','kg',0,'2014-02-28 16:49:29'),('bao','包',0,'2014-02-28 16:49:43'),('xiang','箱',0,'2014-02-28 16:50:00'),('dai','袋',0,'2014-02-28 16:50:14'),('he','盒',0,'2014-02-28 16:50:25'),('ml','毫升',0,'2014-02-28 16:50:38'),('l','升',0,'2014-02-28 16:50:50'),('guan','罐',0,'2014-02-28 16:51:02');
+/*!40000 ALTER TABLE `zxkc_dm_dw` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `zxkc_dm_ry`
+--
+
+DROP TABLE IF EXISTS `zxkc_dm_ry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zxkc_dm_ry` (
+  `RYDM` varchar(25) NOT NULL,
+  `RYMC` varchar(50) DEFAULT NULL,
+  `DR` int(11) NOT NULL,
+  `TS` datetime NOT NULL,
+  PRIMARY KEY (`RYDM`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `zxkc_dm_ry`
+--
+
+LOCK TABLES `zxkc_dm_ry` WRITE;
+/*!40000 ALTER TABLE `zxkc_dm_ry` DISABLE KEYS */;
+INSERT INTO `zxkc_dm_ry` VALUES ('chencaiqiang','陈彩强',0,'2014-03-01 11:50:14'),('chouhuizhi','仇慧智',0,'2014-03-01 11:49:31'),('daidongguan','戴东官',0,'2014-03-01 11:48:09'),('gaoxunfeng','高旭峰',0,'2014-03-01 11:48:53'),('liaoxiaowei','廖小卫',0,'2014-03-01 11:49:06'),('limingyuan','林明远',0,'2014-03-01 11:48:27'),('wangyin','王银',0,'2014-03-01 11:49:18'),('wuqingqiang','吴清强',0,'2014-03-01 11:48:40'),('wuqingzhi','吴清智',0,'2014-03-01 11:50:00'),('yubo','余波',0,'2014-03-01 11:49:43');
+/*!40000 ALTER TABLE `zxkc_dm_ry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `zxkc_yw_hpck`
 --
 
@@ -172,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-02-27 13:36:14
+-- Dump completed on 2014-03-02 16:59:13

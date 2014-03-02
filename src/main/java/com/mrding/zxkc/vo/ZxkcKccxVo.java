@@ -11,7 +11,21 @@ public class ZxkcKccxVo {
 	private String bzgg;
 	private BigDecimal hpsl;
 	private BigDecimal hpsl_dw;
+	private String dwmc;
+	private String dj;
 
+	public String getDwmc() {
+		return dwmc;
+	}
+	public void setDwmc(String dwmc) {
+		this.dwmc = dwmc;
+	}
+	public String getDj() {
+		return dj;
+	}
+	public void setDj(String dj) {
+		this.dj = dj;
+	}
 	public String getCk() {
 		return ck;
 	}

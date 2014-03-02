@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 import com.mrding.common.CommonUtils;
+import com.mrding.common.dao.DSFactory;
+import com.mrding.common.dao.DaoUtils;
 import com.mrding.zxkc.dao.ZxkcHplrDao;
 import com.mrding.zxkc.model.ZxkcYwHpxx;
 import com.mrding.zxkc.vo.ZxkcHplrVo;
@@ -64,6 +66,28 @@ public class ZxkcHplrManager {
 		} catch(Exception nullPointException) {
 			return false;
 		}
+	}
+
+	/**
+	 * 查询所有单位
+	 * @param hpbh 
+	 * @return
+	 */
+	public List<Map<String, Object>> listUnit(Integer hpbh) {
+		return dao.queryUnitList(hpbh);
+	}
+
+	/**
+	 * 根据货品编号获取单位
+	 * @param hpbh
+	 * @return
+	 */
+	public String getDwByhpbh(int hpbh) {
+		return dao.queryDwByHpbh(hpbh);
+	}
+
+	public List<Map<String, Object>> listRy() {
+		return dao.queryRyList();
 	}
 
 }

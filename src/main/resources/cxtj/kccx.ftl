@@ -31,14 +31,15 @@
 			new Ext.grid.RowNumberer(),
 			{header:"hpbh", dataIndex:"hpbh", hidden:true},
 			{header:"货品名称", dataIndex:"hpmc", width:150},
+			{header:"货品数量", dataIndex:"hpsl", width:100},
+			{header:"单位", dataIndex:"dwmc", width:60},
 			{header:"包装规格", dataIndex:"bzgg", width:100},
-			{header:"数量(单位)", dataIndex:"hpsl_dw", sortable:true},
-			{header:"数量(入库最小单位)", dataIndex:"hpsl", sortable:true}
+			{header:"单价", dataIndex:"dj", width:60}
         ]);
 		
 		var kclistGridDs = new Ext.data.JsonStore({
 			url:"${ctxPath}/cxtj/kccx_loadKclist.shtml", root:"kclist", 
-			fields:["hpbh", "hpmc", "bzgg", "hpsl_dw", "hpsl"]
+			fields:["hpbh", "hpmc", "hpsl", "dwmc", "bzgg", "dj"]
 		});
 		
 		var kclistGrid = new Ext.grid.GridPanel({

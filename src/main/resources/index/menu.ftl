@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>登录</title>
 <#include "/commons/ext.ftl"/>
-<#include "/commons/commonJs.ftl"/>
 <script type="text/javascript">
 
 Ext.onReady(function() {
@@ -27,7 +26,7 @@ Ext.onReady(function() {
 	
 	menuTree.on("click", function(node) {
 		if (node.leaf) {
-			intoFunc(ctxPath + node.attributes.funcUrl);
+			intoFunc("${ctxPath}" + node.attributes.funcUrl);
 		}
 	})
 	

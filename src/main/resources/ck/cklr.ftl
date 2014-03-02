@@ -24,15 +24,22 @@
 		var ckyyCombo = new Ext.form.ComboBox({
 			store:ckyyComboStore, emptyText:"请选择", mode:"local", valueField:"ckyy", displayField:"ckyymc", triggerAction:"all", allowBlank:false
 		});
+
+		var hpbhComboBox = new Ext.form.ComboBox({
+		    store:hpbhSelectStore, triggerAction:"all", id:"hpbh", fieldLabel:"货品名称", emptyText:"请选择", mode:"local", valueField:"hpbh", displayField:"hpmc",
+		    listeners: {
+			    change:function(combo, newValue, oldValue) {
+					unitStore.load({params:{hpbh:newValue}});
+			    }
+		    }
+		});
 		
 		var hpckCm = new Ext.grid.ColumnModel([
-			{header:"货品名称", dataIndex:"hpbh", width:150, editor:hpbhSelect, renderer:Ext.util.Format.comboRenderer(hpbhSelect)},
-			{header:"出库原因", dataIndex:"ckyy", editor:ckyyCombo, renderer:Ext.util.Format.comboRenderer(ckyyCombo)},
+			{header:"货品名称", dataIndex:"hpbh", width:150, editor:hpbhComboBox, renderer:Ext.util.Format.comboRenderer(hpbhComboBox)},
 			{header:"出库店面", dataIndex:"ck", editor:ckSelect, renderer:Ext.util.Format.comboRenderer(ckSelect)},
-			{header:"单位类型", dataIndex:"dwlx", editor:dwSelect, renderer:Ext.util.Format.comboRenderer(dwSelect)},
+			{header:"单位", dataIndex:"dw", editor:unitComboBox, renderer:Ext.util.Format.comboRenderer(unitComboBox)},
 			{header:"货品数量", dataIndex:"hpsl", editor:new Ext.form.NumberField({allowBlank:false, precision:2})},
 			{header:"出库时间", dataIndex:"cksj", sortable:true, editor:new Ext.form.DateField({allowBlank:false, format:"Y-m-d"}), renderer:new Ext.util.Format.dateRenderer('Y-m-d')},
-			{header:"出库人", dataIndex:"ckr", editor:new Ext.form.TextField({allowBlank:false})},
 			{header:"备注", dataIndex:"bz", editor:new Ext.form.TextField({})}
 		]);
 		
@@ -94,16 +101,20 @@
                         Ext.Msg.alert("系统提示", "请先录入出库信息！");
                         return ;
 					}
-					Ext.Ajax.request({url:"${ctxPath}/ck/cklr_saveHpck.shtml",
-						params:{data:encodeURIComponent(Ext.encode(dataArray))},
-						success:function(response) {
-							var data = Ext.decode(response.responseText);
-							if (data.success) {
-								Ext.Msg.alert("系统提示", "保存成功！");
-								hpckList.getStore().removeAll();
-							} else {
-								Ext.Msg.alert("系统提示", "保存失败！");
-							}
+					Ext.Msg.confirm("系统提示", "确认保存？", function(opt) {
+						if (opt == "yes") {
+							Ext.Ajax.request({url:"${ctxPath}/ck/cklr_saveHpck.shtml",
+								params:{data:encodeURIComponent(Ext.encode(dataArray))},
+								success:function(response) {
+									var data = Ext.decode(response.responseText);
+									if (data.success) {
+										Ext.Msg.alert("系统提示", "保存成功！");
+										hpckList.getStore().removeAll();
+									} else {
+										Ext.Msg.alert("系统提示", "保存失败！");
+									}
+								}
+							});
 						}
 					});
             	}
@@ -115,16 +126,12 @@
         		Ext.Msg.alert("系统提示", "货品名称不能为空！");
         		return ;
         	}
-        	if (fnIsBlank(record.get("ckyy"))) {
-        		Ext.Msg.alert("系统提示", "出库原因不能为空！");
-        		return ;
-        	}
         	if (fnIsBlank(record.get("ck"))) {
         		Ext.Msg.alert("系统提示", "出库店面不能为空！");
         		return ;
         	}
-        	if (fnIsBlank(record.get("dwlx"))) {
-        		Ext.Msg.alert("系统提示", "单位类型不能为空！");
+        	if (fnIsBlank(record.get("dw"))) {
+        		Ext.Msg.alert("系统提示", "单位不能为空！");
         		return ;
         	}
         	if (fnIsBlank(record.get("hpsl").toString())) {
@@ -133,10 +140,6 @@
         	}
         	if (record.get("cksj") == null || record.get("cksj") == "") {
         		Ext.Msg.alert("系统提示", "出库时间不能为空！");
-        		return ;
-        	}
-        	if (fnIsBlank(record.get("ckr"))) {
-        		Ext.Msg.alert("系统提示", "出库人不能为空！");
         		return ;
         	}
         	return true;

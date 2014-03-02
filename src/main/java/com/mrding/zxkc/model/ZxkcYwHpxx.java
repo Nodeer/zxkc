@@ -11,7 +11,7 @@ import java.sql.*;
 public class ZxkcYwHpxx {
     
     private String ukey;
-    private int hpbh;
+    private Integer hpbh;
     private String hpmc;
     private String bzgg;
     private String dw;
@@ -23,8 +23,15 @@ public class ZxkcYwHpxx {
     private Timestamp xgsj;
     private BigDecimal dwzhl;
     private String dj;
+    private String dwmc;
 
-    public BigDecimal getDwzhl() {
+    public String getDwmc() {
+		return dwmc;
+	}
+	public void setDwmc(String dwmc) {
+		this.dwmc = dwmc;
+	}
+	public BigDecimal getDwzhl() {
 		return dwzhl;
 	}
 	public void setDwzhl(BigDecimal dwzhl) {
@@ -51,10 +58,10 @@ public class ZxkcYwHpxx {
     public String getHpmc() {
         return hpmc;
     }
-    public int getHpbh() {
+    public Integer getHpbh() {
         return hpbh;
     }
-    public void setHpbh(int hpbh) {
+    public void setHpbh(Integer hpbh) {
         this.hpbh = hpbh;
     }
     public void setHpmc(String hpmc) {

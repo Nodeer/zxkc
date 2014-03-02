@@ -14,7 +14,21 @@ public class ZxkcCklrVo extends ZxkcYwHpck{
 	private BigDecimal hpsl_zxdw;
 	private BigDecimal hpsl_dw;
 	private String dwlx;
+	private String dwdm;
+	private String dw;
 
+	public String getDwdm() {
+		return dwdm;
+	}
+	public void setDwdm(String dwdm) {
+		this.dwdm = dwdm;
+	}
+	public String getDw() {
+		return dw;
+	}
+	public void setDw(String dw) {
+		this.dw = dw;
+	}
 	public String getDwlx() {
 		return dwlx;
 	}

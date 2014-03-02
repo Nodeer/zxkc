@@ -9,30 +9,44 @@ public class ZxkcYwHprkVo extends ZxkcYwHprk {
 	private String rksjq;
 	private String rksjz;
 	private String ckmc;
-	private BigDecimal hpsl_zxdw;
-	private BigDecimal hpsl_dw;
+	private BigDecimal hpsl;
 	private String dwlx;
+	private String dwdm;
+	private String dwmc;
+	private String rkrdm;
 
+	public String getDwdm() {
+		return dwdm;
+	}
+	public void setDwdm(String dwdm) {
+		this.dwdm = dwdm;
+	}
+	public String getDwmc() {
+		return dwmc;
+	}
+	public void setDwmc(String dwmc) {
+		this.dwmc = dwmc;
+	}
+	public String getRkrdm() {
+		return rkrdm;
+	}
+	public void setRkrdm(String rkrdm) {
+		this.rkrdm = rkrdm;
+	}
 	public String getDwlx() {
 		return dwlx;
 	}
 	public void setDwlx(String dwlx) {
 		this.dwlx = dwlx;
 	}
-	public BigDecimal getHpsl_zxdw() {
-		return hpsl_zxdw;
-	}
-	public void setHpsl_zxdw(BigDecimal hpsl_zxdw) {
-		this.hpsl_zxdw = hpsl_zxdw;
-	}
-	public BigDecimal getHpsl_dw() {
-		return hpsl_dw;
-	}
-	public void setHpsl_dw(BigDecimal hpsl_dw) {
-		this.hpsl_dw = hpsl_dw;
-	}
 	public String getCkmc() {
 		return ckmc;
+	}
+	public BigDecimal getHpsl() {
+		return hpsl;
+	}
+	public void setHpsl(BigDecimal hpsl) {
+		this.hpsl = hpsl;
 	}
 	public void setCkmc(String ckmc) {
 		this.ckmc = ckmc;

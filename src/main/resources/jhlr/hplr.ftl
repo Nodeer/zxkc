@@ -17,12 +17,10 @@
 					]
 				}, {	
 					columnWidth: 0.3, labelWidth: 80, labelAlign: 'right', layout: 'form', border: false, items: [
-						{ xtype: 'textfield', name: 'dw', id: 'dw', fieldLabel: "<font color='red'>*</font>单位" },
-						{ xtype: 'textfield', id: 'zxdw', name: 'zxdw', fieldLabel: "<font color='red'>*</font>入库最小单位" }
+						unitComboBox,
 					]
 				},{	
 					columnWidth: 0.3, labelWidth: 80, labelAlign: 'right', layout: 'form', border: false, items: [
-						{ xtype: 'numberfield', id: 'dwzhl', name: 'dwzhl', fieldLabel: "<font color='red'>*</font>单位转换率" },
 						{ xtype: 'textfield', id: 'dj', name: 'dj', fieldLabel: "单价" }
 					]
 				}
@@ -65,9 +63,7 @@
         Ext.getCmp("hpmc").setValue("");
         Ext.getCmp("dw").setValue("");
         Ext.getCmp("bzgg").setValue("");
-        Ext.getCmp("zxdw").setValue("");
         Ext.getCmp("ukey").setValue("");
-        Ext.getCmp("dwzhl").setValue("");
         Ext.getCmp("dj").setValue("");
 	}
 	
@@ -82,14 +78,6 @@
 		}
 		if (fnIsBlank(Ext.getCmp("dw").getValue())) {
 			Ext.Msg.alert("系统提示", "单位不能为空！");
-			return false;
-		}
-		if (fnIsBlank(Ext.getCmp("zxdw").getValue())) {
-			Ext.Msg.alert("系统提示", "入库最小单位不能为空！");
-			return false;
-		}
-		if (fnIsBlank(Ext.getCmp("dwzhl").getValue()) || Ext.getCmp("dwzhl").getValue() <= 0) {
-			Ext.Msg.alert("系统提示", "单位转换率不能为空或小于等于0的值！");
 			return false;
 		}
 		return true;
@@ -107,7 +95,7 @@
 		var gridStore = new Ext.data.JsonStore({
 			url: '${ctxPath}/jhlr/hplr_listHpxx.shtml',
 			root: 'hpxxList',
-			fields: ['ukey', 'hpbh', 'hpmc', 'bzgg', 'dw', 'zxdw', 'dwzhl', 'dj', 'ts']
+			fields: ['ukey', 'hpbh', 'hpmc', 'bzgg', 'dw', 'zxdw', 'dwzhl', 'dj', 'ts', 'dwmc']
 		});
 		gridStore.load();
 		
@@ -123,9 +111,8 @@
 				{header: '货品编号', dataIndex: 'hpbh', hidden:true, width: 100},
 				{header: '货品名称', dataIndex: 'hpmc', width: 220},
 				{header: '包装规格', dataIndex: 'bzgg', width: 150},
-				{header: '单位', dataIndex: 'dw', width: 80},
-				{header: '入库最小单位', dataIndex: 'zxdw', width: 100},
-				{header: '单位转换率', dataIndex: 'dwzhl', width: 90},
+				{header: 'dw', dataIndex: 'dw', hidden:true},
+				{header: '单位', dataIndex: 'dwmc', width: 80},
 				{header: '单价', dataIndex: 'dj', width: 80},
 				{header: '录入时间', dataIndex: 'ts', width: 300, renderer: new Ext.util.Format.dateRenderer('Y-m-d H:m:s'), sortable: true},
 			],
@@ -156,9 +143,7 @@
 						Ext.getCmp("hpmc").setValue(hpxxBean.get("hpmc"));
 						Ext.getCmp("dw").setValue(hpxxBean.get("dw"));
 						Ext.getCmp("bzgg").setValue(hpxxBean.get("bzgg"));
-						Ext.getCmp("zxdw").setValue(hpxxBean.get("zxdw"));
 						Ext.getCmp("ukey").setValue(hpxxBean.get("ukey"));
-						Ext.getCmp("dwzhl").setValue(hpxxBean.get("dwzhl"));
 						Ext.getCmp("dj").setValue(hpxxBean.get("dj"));
 						addWindow.setTitle("修改货品");
 						addWindow.show();

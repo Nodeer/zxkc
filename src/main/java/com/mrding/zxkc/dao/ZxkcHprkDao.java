@@ -52,17 +52,17 @@ public class ZxkcHprkDao {
                 pstmt.setString(1, UUID.randomUUID().toString().replace("-", ""));
                 pstmt.setInt(2, (int) jsonObj.get("hpbh"));
                 pstmt.setString(3, hplrBean.getHpmc());
-                pstmt.setString(4, jsonObj.getString("ghsmc"));
+                pstmt.setString(4, (String) jsonObj.get("ghsmc"));
                 pstmt.setString(5, "");
                 pstmt.setString(6, "");
-                pstmt.setBigDecimal(7, countHpsl(jsonObj.getInt("hpbh"), new BigDecimal(String.valueOf(jsonObj.get("hpsl"))), jsonObj.getString("dw")));
-                pstmt.setString(8, jsonObj.getString("rkr"));
-                pstmt.setDate(9, new java.sql.Date(format.parse(jsonObj.getString("rksj")).getTime()));
+                pstmt.setBigDecimal(7, new BigDecimal((Integer) jsonObj.get("hpsl")));
+                pstmt.setString(8, (String) jsonObj.get("rkr"));
+                pstmt.setDate(9, new java.sql.Date(format.parse((String) jsonObj.get("rksj")).getTime()));
                 pstmt.setString(10, (String) jsonObj.get("bz"));
                 pstmt.setInt(11, 0);
                 pstmt.setTimestamp(12, new Timestamp(new java.util.Date().getTime()));
                 pstmt.setNull(13, Types.TIMESTAMP);
-                pstmt.setString(14, jsonObj.getString("ck"));
+                pstmt.setString(14, (String) jsonObj.get("ck"));
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -103,14 +103,15 @@ public class ZxkcHprkDao {
 		voBean.setUkey((String) objs[0]);
 		voBean.setHpbh((Integer) objs[1]);
 		voBean.setHpmc((String) objs[2]);
-		voBean.setGhsmc((String) objs[3]);
-		voBean.setHpsl_zxdw((BigDecimal) objs[4]);
-		voBean.setHpsl_dw((BigDecimal) objs[5]);
+		voBean.setHpsl((BigDecimal) objs[3]);
+		voBean.setDwdm((String) objs[4]);
+		voBean.setDwmc((String) objs[5]);
 		voBean.setCk((String) objs[6]);
 		voBean.setCkmc((String) objs[7]);
-		voBean.setRkr((String) objs[8]);
-		voBean.setRksj((java.sql.Date) objs[9]);
-		voBean.setBz((String) objs[10]);
+		voBean.setRkrdm((String) objs[8]);
+		voBean.setRkr((String) objs[9]);
+		voBean.setRksj((java.sql.Date) objs[10]);
+		voBean.setBz((String) objs[11]);
 		return voBean;
 	}
 
@@ -120,18 +121,19 @@ public class ZxkcHprkDao {
 	 * @return
 	 */
 	private String sqlListHprk(ZxkcYwHprkVo model) {
-		return "select a.UKEY,a.HPBH,a.HPMC,a.GHSMC,a.HPSL as sl_zxdw, round((a.HPSL / b.DWZHL),2) as sl_dw,c.CKDM,c.CKMC,a.RKR,a.RKSJ,a.BZ" +
-                " from zxkc_yw_hprk a " +
-                " left join zxkc_yw_hpxx b on a.HPBH=b.HPBH and b.DR=0" +
-                " left join zxkc_dm_ck c on a.CK=c.CKDM and c.DR=0" +
-                " where a.DR=0" + 
+		return "select a.UKEY,a.HPBH,a.HPMC,a.HPSL,d.DWDM,d.DWMC,c.CKDM,c.CKMC,e.RYDM,e.RYMC,a.RKSJ,a.BZ " +
+				" from zxkc_yw_hprk a  " +
+				" left join zxkc_yw_hpxx b on a.HPBH=b.HPBH and b.DR=0 " +
+				" left join zxkc_dm_ck c on a.CK=c.CKDM and c.DR=0 " +
+				" left join zxkc_dm_dw d on b.DW=d.DWDM and d.DR=0" +
+				" left join zxkc_dm_ry e on a.RKR=e.RYDM and e.DR=0" +
+				" where a.DR=0 " +
                 (CommonUtils.isNotBlank(model.getHpbh()) ? DaoUtils.sqlEq("a.HPBH", model.getHpbh()) : "") +
                 (CommonUtils.isNotBlank(model.getCk()) ? DaoUtils.sqlEq("a.CK", model.getCk()) : "") +
                 (CommonUtils.isNotBlank(model.getRksjq()) ? DaoUtils.sqlGe("a.RKSJ", model.getRksjq()) : "") +
                 (CommonUtils.isNotBlank(model.getRksjz()) ? DaoUtils.sqlLe("a.RKSJ", model.getRksjz()) : "") + 
-                (CommonUtils.isNotBlank(model.getGhsmc()) ? DaoUtils.sqlLike("a.GHSMC", "%" + model.getGhsmc() + "%") : "") +
                 (CommonUtils.isNotBlank(model.getRkr()) ? DaoUtils.sqlLike("a.RKR", "%" + model.getRkr() + "%") : "") +
-                " order by a.RKSJ";
+				" order by a.RKSJ";
 	}
 
 	/**
@@ -151,7 +153,8 @@ public class ZxkcHprkDao {
 			pstmt.setString(3, model.getGhsmc());
 			pstmt.setString(4, model.getShr());
 			pstmt.setString(5, model.getShrdh());
-			pstmt.setBigDecimal(6, countHpsl(model.getHpbh(), model.getHpsl(), model.getDwlx()));
+//			pstmt.setBigDecimal(6, countHpsl(model.getHpbh(), model.getHpsl(), model.getDwlx()));
+			pstmt.setBigDecimal(6, model.getHpsl());
 			pstmt.setString(7, model.getRkr());
 			pstmt.setTimestamp(8, new Timestamp(model.getRksj().getTime()));
 			pstmt.setString(9, model.getBz());

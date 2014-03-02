@@ -39,12 +39,12 @@ public class CommonUtils {
 		List<Object[]> list, String valueKey, String displayKey) {
 	    List<Map<String, Object>> rtnList = new ArrayList<Map<String, Object>>();
 	    if (listIsNotBlank(list)) {
-		for (Object[] objs : list) {
-		    Map<String, Object> map = new HashMap<String, Object>();
-		    map.put(valueKey, objs[0]); 
-		    map.put(displayKey, objs[1]); 
-		    rtnList.add(map);
-		}
+			for (Object[] objs : list) {
+			    Map<String, Object> map = new HashMap<String, Object>();
+			    map.put(valueKey, objs[0]); 
+			    map.put(displayKey, objs[1]); 
+			    rtnList.add(map);
+			}
 	    }
 	    return rtnList;
 	}
