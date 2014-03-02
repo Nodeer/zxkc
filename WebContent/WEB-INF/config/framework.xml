@@ -11,6 +11,7 @@
 				<param name="root">jsonList</param>
 				<param name="root">jsonMap</param>
 			</result>
+			<result name="hplrPasswd" type="freemarker">/jhlr/hplrPasswd.ftl</result>
 			<result name="hplr" type="freemarker">/jhlr/hplr.ftl</result>
 		</action>
 		<action name="hprk_*" method="{1}" class="com.mrding.zxkc.web.jhlr.ZxkcHprkAction">

@@ -15,7 +15,11 @@ import com.opensymphony.xwork2.ModelDriven;
 public class ZxkcHplrAction extends ActionSupport<ZxkcHplrVo, ZxkcHplrManager>{
 
     public String list() {
-	return "hplr";
+    	return "hplrPasswd";
+    }
+    
+    public String funcHplr() {
+    	return "hplr";
     }
     
     /**
@@ -91,6 +95,11 @@ public class ZxkcHplrAction extends ActionSupport<ZxkcHplrVo, ZxkcHplrManager>{
     
     public String loadRy() {
     	jsonMap.put("ryList", manager.listRy());
+    	return SUCCESS;
+    }
+    
+    public String checkPasswd() {
+    	jsonMap.put("success", "hplrroot".equals((String) request.getParameter("passwd")));
     	return SUCCESS;
     }
 
