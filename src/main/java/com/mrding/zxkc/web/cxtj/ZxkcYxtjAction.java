@@ -16,8 +16,18 @@ public class ZxkcYxtjAction extends ActionSupport<ZxkcYxtjVo, ZxkcYxtjManger> {
 	 * @return
 	 */
 	public String loadYxtj() {
+		//将查询条件放入session，供导出时使用
+		session.put("preModel", model);
 		jsonMap.put("yxtjList", manager.getYxtjList(model));
 		return SUCCESS;
+	}
+	
+	public String export() {
+		try {
+			manager.export(response, (ZxkcYxtjVo) session.get("preModel"));
+		} catch(Exception e) {
+		}
+		return null;
 	}
 
 }

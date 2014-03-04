@@ -43,7 +43,17 @@
 		});
 		
 		var kclistGrid = new Ext.grid.GridPanel({
-			renderTo:"kclistGrid", title:"库存信息", width:1000, frame:true, height:350, cm:kclistGridCm, ds:kclistGridDs, loadMask:true, viewConfig:{forceFit:true}
+			renderTo:"kclistGrid", title:"库存信息", width:1000, frame:true, height:350, cm:kclistGridCm, ds:kclistGridDs, loadMask:true, viewConfig:{forceFit:true},
+			tbar:["-",
+				{text:"导出", cls:"exportBtn", handler:function() {
+					if (kclistGrid.getStore().getCount() == 0) {
+						Ext.Msg.alert("系统提示", "没有数据可供导出！");
+						return ;
+					}
+					//exportExcel(kclistGrid, "库存查询");
+					window.location.href="${ctxPath}/cxtj/kccx_export.shtml";
+				}}, "-"
+			]
 		});
 		
 	});

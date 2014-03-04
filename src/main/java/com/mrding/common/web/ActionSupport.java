@@ -5,11 +5,13 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
@@ -23,6 +25,7 @@ public class ActionSupport<V, M> implements ModelDriven<V>, ServletRequestAware,
     
     protected HttpServletRequest request;
     protected HttpServletResponse response;
+    protected Map session = (Map) ActionContext.getContext().get(ActionContext.SESSION);
     
     protected M manager = getManagerInstance();
     protected V model = getVoInstance();

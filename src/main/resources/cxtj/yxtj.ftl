@@ -47,7 +47,17 @@
 		});
 		
 		var kclistGrid = new Ext.grid.GridPanel({
-			renderTo:"yxtjGrid", title:"营销信息", width:1000, frame:true, height:350, cm:yxtjGridCm, ds:yxtjGridDs, loadMask:true, viewConfig:{forceFit:true}
+			renderTo:"yxtjGrid", title:"营销信息", width:1000, frame:true, height:350, cm:yxtjGridCm, ds:yxtjGridDs, loadMask:true, viewConfig:{forceFit:true},
+			tbar:["-", {
+				text:"导出",
+				handler:function() {
+					if (kclistGrid.getStore().getCount() == 0) {
+						Ext.Msg.alert("系统提示", "没有数据可供导出！");
+						return ;
+					}
+					window.location.href = "${ctxPath}/cxtj/yxtj_export.shtml";
+				}
+			}, "-"]
 		});
 		
 	});
