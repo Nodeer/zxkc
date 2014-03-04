@@ -1,6 +1,7 @@
 package com.mrding.common;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,8 +44,7 @@ public abstract class Exporter {
 	 */
 	public void export(HttpServletResponse response, String xlsName) throws Exception {
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-		response.setHeader("Content-disposition",
-				"attachment;filename=" + xlsName + ".xls");
+		response.setHeader("Content-disposition", "attachment;filename=" + new String(xlsName.getBytes("utf-8"), "ISO8859-1") + ".xls");
 		OutputStream os = response.getOutputStream();
 		WritableWorkbook wwb = Workbook.createWorkbook(os);
 		WritableSheet sheet = wwb.createSheet("sheet1", 0);
