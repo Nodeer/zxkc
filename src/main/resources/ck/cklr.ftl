@@ -28,16 +28,28 @@
 		var hpbhComboBox = new Ext.form.ComboBox({
 		    store:hpbhSelectStore, triggerAction:"all", id:"hpbh", fieldLabel:"货品名称", emptyText:"请选择", mode:"local", valueField:"hpbh", displayField:"hpmc",
 		    listeners: {
-			    change:function(combo, newValue, oldValue) {
-					unitStore.load({params:{hpbh:newValue}});
+			    select:function(combo, record, index) {
+			    	var row = hpckList.getSelectionModel().getSelected();
+			    	Ext.Ajax.request({
+			    		url:"${ctxPath}/jhlr/hplr_getDwByHpbh.shtml",
+			    		params:{hpbh:hpbhComboBox.getValue()},
+			    		success:function(response) {
+			    			var result = Ext.decode(response.responseText);
+					    	row.set("dw", result.dw);
+					    	row.commit();
+			    		}
+			    	});
 			    }
 		    }
 		});
 		
+		var dwComboBox = new Ext.form.ComboBox({
+			id:"dw", hiddenName:"dw", store:unitStore, anchor:"90%", triggerAction:"all", emptyText:"请选择", mode:"local", valueField:"dwdm", displayField:"dwmc", fieldLabel:"<font color='red'>*</font>单位", readOnly:true
+		})
 		var hpckCm = new Ext.grid.ColumnModel([
 			{header:"货品名称", dataIndex:"hpbh", width:150, editor:hpbhComboBox, renderer:Ext.util.Format.comboRenderer(hpbhComboBox)},
 			{header:"出库店面", dataIndex:"ck", editor:ckSelect, renderer:Ext.util.Format.comboRenderer(ckSelect)},
-			{header:"单位", dataIndex:"dw", editor:unitComboBox, renderer:Ext.util.Format.comboRenderer(unitComboBox)},
+			{header:"单位", dataIndex:"dw", editor:dwComboBox, renderer:Ext.util.Format.comboRenderer(dwComboBox)},
 			{header:"货品数量", dataIndex:"hpsl", editor:new Ext.form.NumberField({allowBlank:false, precision:2})},
 			{header:"出库时间", dataIndex:"cksj", sortable:true, editor:new Ext.form.DateField({allowBlank:false, format:"Y-m-d"}), renderer:new Ext.util.Format.dateRenderer('Y-m-d')},
 			{header:"备注", dataIndex:"bz", editor:new Ext.form.TextField({})}
@@ -63,6 +75,7 @@
                 	var row = new HpckRecord({ hpbh:"", ckyy:"", ck:"", dwlx:"", hpsl:"", cksj:"", ckr:"", bz:""});
                 	hpckList.stopEditing();
                 	hpckList.getStore().insert(0, row);
+                	hpckList.getSelectionModel().selectRow(0);
                 	hpckList.startEditing(0, 0);
                 }
             }, "-", {

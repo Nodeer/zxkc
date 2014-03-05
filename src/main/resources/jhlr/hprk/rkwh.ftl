@@ -57,13 +57,26 @@
 			root:"hprkList",
 			fields:["ukey", "hpbh", "hpmc", "hpsl", "dwdm", "dwmc", "ck", "ckmc", "rkrdm", "rkr", "rksj", "bz"]
 		});
+		
+		function fnChangeHpbh(combo, record, index) {
+	    	Ext.Ajax.request({
+	    		url:"${ctxPath}/jhlr/hplr_getDwByHpbh.shtml",
+	    		params:{hpbh: combo.getValue()},
+	    		success:function(response) {
+	    			var result = Ext.decode(response.responseText);
+	    			Ext.getCmp("modifyDw").setValue(result.dw);
+	    		}
+	    	});
+		}
 
         var modifyForm = new Ext.form.FormPanel({
         	url:"${ctxPath}/jhlr/hprk_modifyHprk.shtml", height:200, frame:true, border:false, items:[{
         		layout:"column", xtype:"fieldset", labelWidth:80, labelAlign:"right", border:false, buttonAlign:"center", items:[
                     {layout:"form", columnWidth:.33, items:[
                     	new Ext.form.Hidden({id:"modifyUkey", name:"ukey"}),
-                    	new Ext.form.ComboBox({store:hpbhSelectStore, anchor:"90%", triggerAction:"all",id:"modifyHpbh", hiddenName:"hpbh", fieldLabel:"<font color='red'>*</font>货品名称", emptyText:"请选择", mode:"local", valueField:"hpbh", displayField:"hpmc"}),
+                    	new Ext.form.ComboBox({store:hpbhSelectStore, anchor:"90%", triggerAction:"all",id:"modifyHpbh", hiddenName:"hpbh", fieldLabel:"<font color='red'>*</font>货品名称", emptyText:"请选择", mode:"local", valueField:"hpbh", displayField:"hpmc",
+                    		listeners:{select:fnChangeHpbh}
+                    	}),
 						new Ext.form.ComboBox({id:"modifyDw", hiddenName:"dw", readOnly:true, store:unitStore, anchor:"90%", triggerAction:"all", emptyText:"请选择", mode:"local", valueField:"dwdm", displayField:"dwmc", fieldLabel:"<font color='red'>*</font>单位"}),
                     	new Ext.form.NumberField({id:"modifyHpsl", name:"hpsl", anchor:"90%", fieldLabel:"<font color='red'>*</font>货品数量"})
                     ]}, {layout:"form", columnWidth:.33, items:[

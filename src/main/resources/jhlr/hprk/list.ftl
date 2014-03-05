@@ -18,15 +18,28 @@
 		var hpbhComboBox = new Ext.form.ComboBox({
 		    store:hpbhSelectStore, triggerAction:"all", id:"hpbh", fieldLabel:"货品名称", emptyText:"请选择", mode:"local", valueField:"hpbh", displayField:"hpmc",
 		    listeners: {
-			    change:function(combo, newValue, oldValue) {
-					unitStore.load({params:{hpbh:newValue}});
+			    select:function(combo, newValue, oldValue) {
+			    	var row = hprkList.getSelectionModel().getSelected();
+			    	Ext.Ajax.request({
+			    		url:"${ctxPath}/jhlr/hplr_getDwByHpbh.shtml",
+			    		params:{hpbh:hpbhComboBox.getValue()},
+			    		success:function(response) {
+			    			var result = Ext.decode(response.responseText);
+					    	row.set("dw", result.dw);
+					    	row.commit();
+			    		}
+			    	});
 			    }
 		    }
 		});
 		
+		var dwComboBox = new Ext.form.ComboBox({
+			id:"dw", hiddenName:"dw", store:unitStore, anchor:"90%", triggerAction:"all", emptyText:"请选择", mode:"local", valueField:"dwdm", displayField:"dwmc", fieldLabel:"<font color='red'>*</font>单位", readOnly:true
+		})
+
 		var hprkCm = new Ext.grid.ColumnModel([
 			{header:"货品名称", dataIndex:"hpbh", width:150, editor:hpbhComboBox, renderer:Ext.util.Format.comboRenderer(hpbhComboBox)},
-			{header:"单位", dataIndex:"dw", editor:unitComboBox, renderer:Ext.util.Format.comboRenderer(unitComboBox)},
+			{header:"单位", dataIndex:"dw", editor:dwComboBox, renderer:Ext.util.Format.comboRenderer(dwComboBox)},
 			{header:"货品数量", dataIndex:"hpsl", editor:new Ext.form.NumberField({allowBlank:false, precision:2})},
 			{header:"店面", dataIndex:"ck", editor:ckSelect, renderer:Ext.util.Format.comboRenderer(ckSelect)},
 			{header:"入库人", dataIndex:"rkr", editor:ryComboBox, renderer:Ext.util.Format.comboRenderer(ryComboBox)},
@@ -54,6 +67,7 @@
                 	var row = new HprkRecord({ hpbh:"", hpsl:"", ck:"", dw:"", rkr:"", rksj:"", bz:""});
                 	hprkList.stopEditing();
                 	hprkList.getStore().insert(0, row);
+                	hprkList.getSelectionModel().selectRow(0);
                 	hprkList.startEditing(0, 0);
                 }
             }, "-", {
