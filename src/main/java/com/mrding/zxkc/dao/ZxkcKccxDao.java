@@ -28,7 +28,7 @@ public class ZxkcKccxDao {
                 (CommonUtils.isNotBlank(model.getCk()) ? DaoUtils.sqlEq("aa.CK", model.getCk()) : "") +
                 (CommonUtils.isNotBlank(model.getJzrq_str()) ? DaoUtils.sqlLe("aa.sj", model.getJzrq_str()) : "") +
 				" group by  aa.HPBH,bb.HPMC,dd.DWMC,bb.BZGG,bb.DJ" +
-                " having sum(aa.sl) <> 0" +
+                //" having sum(aa.sl) <> 0" +
 				" order by aa.HPBH";
 		return DaoUtils.queryBySql(sql, DSFactory.CURRENT);
 	}
