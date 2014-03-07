@@ -34,12 +34,12 @@
 			{header:"货品数量", dataIndex:"hpsl", width:100},
 			{header:"单位", dataIndex:"dwmc", width:60},
 			{header:"包装规格", dataIndex:"bzgg", width:100},
-			{header:"单价", dataIndex:"dj", width:60}
+			//{header:"单价", dataIndex:"dj", width:60, hidden:true}
         ]);
 		
 		var kclistGridDs = new Ext.data.JsonStore({
 			url:"${ctxPath}/cxtj/kccx_loadKclist.shtml", root:"kclist", 
-			fields:["hpbh", "hpmc", "hpsl", "dwmc", "bzgg", "dj"]
+			fields:["hpbh", "hpmc", "hpsl", "dwmc", "bzgg"]
 		});
 		
 		var kclistGrid = new Ext.grid.GridPanel({

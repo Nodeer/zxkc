@@ -23,7 +23,7 @@ public class ZxkcYxtjDao {
 	 * @return
 	 */
 	public List<Object[]> queryYxtjList(ZxkcYxtjVo model) {
-		return DaoUtils.queryBySql("select b.HPBH,b.HPMC,b.BZGG,b.DJ,c.DWMC " +
+		return DaoUtils.queryBySql("select b.HPBH,b.HPMC,b.BZGG,b.DJ * sum(a.HPSL) as DJ,sum(a.HPSL) as zsl,c.DWMC " +
 				createYxtjSqlHead(model.getDmList(), model.getDwlx()) +
 				" from zxkc_yw_hpck a" +
 				" left join zxkc_yw_hpxx b on a.HPBH=b.HPBH and b.DR=0" +

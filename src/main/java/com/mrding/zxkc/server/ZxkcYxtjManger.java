@@ -52,10 +52,11 @@ public class ZxkcYxtjManger {
 		map.put("hpmc", objs[1]);
 		map.put("bzgg", objs[2]);
 		map.put("dj", objs[3]);
-		map.put("dwmc", objs[4]);
+		map.put("zsl", objs[4]);
+		map.put("dwmc", objs[5]);
 		if (CommonUtils.listIsNotBlank(dmList)) {
 			for (int i = 0, max = dmList.size(); i < max; i++) {
-				map.put((String) dmList.get(i)[0], objs[i + 5]);
+				map.put((String) dmList.get(i)[0], objs[i + 6]);
 			}
 		}
 		return map;
@@ -78,10 +79,11 @@ public class ZxkcYxtjManger {
 				try {
 					sheet.addCell(new Label(0, i + 1, (String) map.get("hpmc")));
 					sheet.addCell(new Label(1, i + 1, (String) map.get("bzgg")));
-					sheet.addCell(new Label(2, i + 1, (String) map.get("dj")));
-					sheet.addCell(new Label(3, i + 1, (String) map.get("dwmc")));
+					sheet.addCell(new Label(2, i + 1, ((Double) map.get("dj")).toString()));
+					sheet.addCell(new Label(3, i + 1, ((BigDecimal) map.get("zsl")).toString()));
+					sheet.addCell(new Label(4, i + 1, (String) map.get("dwmc")));
 					for (int j = 0, max = dmList_param.size(); j < max; j++) {
-						sheet.addCell(new Label(j + 4, i + 1, ((BigDecimal) map.get((String) dmList_param.get(i)[0])).toString()));
+						sheet.addCell(new Label(j + 5, i + 1, ((BigDecimal) map.get((String) dmList_param.get(j)[0])).toString()));
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -100,7 +102,8 @@ public class ZxkcYxtjManger {
 		List<String> head = new ArrayList<String>();
 		head.add("货品名称");
 		head.add("包装规格");
-		head.add("单价");
+		head.add("总价格");
+		head.add("总数量");
 		head.add("单位");
 		for (int i = 0, max = dmList.size(); i < max; i++) {
 			head.add((String) dmList.get(i)[1]);

@@ -31,8 +31,9 @@
 		var yxtjGridCm = new Ext.grid.ColumnModel([
 			new Ext.grid.RowNumberer(),
 			{header:"货品名称", dataIndex:"hpmc", width:150},
-			{header:"包装规格", dataIndex:"bzgg", width:100},
-			{header:"单价", dataIndex:"dj", width:80},
+			{header:"包装规格", dataIndex:"bzgg", width:150},
+			{header:"总价格", dataIndex:"dj", width:100},
+			{header:"总数量", dataIndex:"zsl", width:100},
 			{header:"单位", dataIndex:"dwmc", width:70},
 			<#if dmList??>
 				<#list dmList as dmObj>
@@ -43,7 +44,7 @@
 		
 		var yxtjGridDs = new Ext.data.JsonStore({
 			url:"${ctxPath}/cxtj/yxtj_loadYxtj.shtml", root:"yxtjList", 
-			fields:["hpmc", "bzgg", "dj", "dwmc"<#if dmList??><#list dmList as dmObj>, "${dmObj[0]!}"</#list></#if>]
+			fields:["hpmc", "bzgg", "dj", "zsl", "dwmc"<#if dmList??><#list dmList as dmObj>, "${dmObj[0]!}"</#list></#if>]
 		});
 		
 		var kclistGrid = new Ext.grid.GridPanel({

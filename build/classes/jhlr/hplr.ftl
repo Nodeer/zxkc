@@ -8,7 +8,7 @@
 	Ext.onReady(function() {
 	var addForm = new Ext.form.FormPanel({
 		url: '${ctxPath}/jhlr/hplr_addHp.shtml',
-		labelAlign: 'right', labelWidth: 200, height: 150, frame: true, layout: 'form', buttonAlign: 'center', items: [{
+		labelAlign: 'right', labelWidth: 200, height: 200, frame: true, layout: 'form', buttonAlign: 'center', items: [{
 			layout: 'column', border: false, style: 'padding-top:5px', items: [
 				{
 					columnWidth: 0.3, labelWidth: 80, labelAlign: 'right', layout: 'form', border: false, items: [
@@ -21,7 +21,7 @@
 					]
 				},{	
 					columnWidth: 0.3, labelWidth: 80, labelAlign: 'right', layout: 'form', border: false, items: [
-						{ xtype: 'textfield', id: 'dj', name: 'dj', fieldLabel: "单价" }
+						{ xtype: 'numberfield', id: 'dj', name: 'dj', fieldLabel: "<font color='red'>*</font>单价" }
 					]
 				}
 			],
@@ -80,12 +80,16 @@
 			Ext.Msg.alert("系统提示", "单位不能为空！");
 			return false;
 		}
+		if (fnIsBlank(Ext.getCmp("dj").getValue())) {
+			Ext.Msg.alert("系统提示", "单价不能为空！");
+			return false;
+		}
 		return true;
 	}
 
     var addWindow = new Ext.Window({
-        width: 900,
-        height: 150,
+        width: 950,
+        height: 170,
         modal: true,
         closeAction: 'hide',
         layout: 'form',
@@ -110,7 +114,7 @@
 				{dataIndex: 'ukey', hidden: true},
 				{header: '货品编号', dataIndex: 'hpbh', hidden:true, width: 100},
 				{header: '货品名称', dataIndex: 'hpmc', width: 220},
-				{header: '包装规格', dataIndex: 'bzgg', width: 150},
+				{header: '包装规格', dataIndex: 'bzgg', width: 200},
 				{header: 'dw', dataIndex: 'dw', hidden:true},
 				{header: '单位', dataIndex: 'dwmc', width: 80},
 				{header: '单价', dataIndex: 'dj', width: 80},

@@ -58,7 +58,7 @@ public class ZxkcKccxManager {
 	 * @throws IOException 
 	 */
 	public void export(HttpServletResponse response, ZxkcKccxVo model) throws Exception {
-		String[] head = new String[] {"货品名称", "货品数量", "单位", "包装规格", "单价"};
+		String[] head = new String[] {"货品名称", "货品数量", "单位", "包装规格"};
 		List dataList = loadKclist(model);
 		new Exporter(head, dataList) {
 			@Override
@@ -69,7 +69,6 @@ public class ZxkcKccxManager {
 					sheet.addCell(new Label(1, i + 1, String.valueOf(bean.getHpsl())));
 					sheet.addCell(new Label(2, i + 1, bean.getDwmc()));
 					sheet.addCell(new Label(3, i + 1, bean.getBzgg()));
-					sheet.addCell(new Label(4, i + 1, bean.getDj()));
 				} catch(Exception e) {
 				}
 			}
