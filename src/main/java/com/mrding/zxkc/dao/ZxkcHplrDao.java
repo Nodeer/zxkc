@@ -48,8 +48,9 @@ public class ZxkcHplrDao {
 		bean.setXgsj((Timestamp) objs[10]);
 		bean.setDwzhl((BigDecimal) objs[11]);
 		bean.setDj((String) objs[12]);
+		bean.setZxkc((BigDecimal) objs[13]);
 		try{
-			bean.setDwmc((String) objs[13]);
+			bean.setDwmc((String) objs[14]);
 		} catch(Exception e) {
 		}
 		return bean;
@@ -59,7 +60,7 @@ public class ZxkcHplrDao {
 	if (CommonUtils.isNotBlank(model.getUkey())) {
 	    update(model);
 	} else {
-            String sql = "insert into zxkc_yw_hpxx values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into zxkc_yw_hpxx values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             Connection conn = DSFactory.CURRENT.getConn();
             PreparedStatement pstmt = null;
             try {
@@ -77,6 +78,7 @@ public class ZxkcHplrDao {
                 pstmt.setTimestamp(11, new Timestamp(new java.util.Date().getTime()));
                 pstmt.setBigDecimal(12, model.getDwzhl());
                 pstmt.setString(13, model.getDj());
+                pstmt.setBigDecimal(14, model.getZxkc());
                 pstmt.executeUpdate();
             } finally {
                 DaoUtils.close(conn, pstmt, null);
@@ -90,7 +92,7 @@ public class ZxkcHplrDao {
      * @throws SQLException 
      */
     private void update(ZxkcYwHpxx model) throws SQLException {
-        String sql = "update zxkc_yw_hpxx set HPMC=?,BZGG=?,DW=?,ZXDW=?,XGSJ=?,DWZHL=?,DJ=? where DR=0 and UKEY='" + model.getUkey() + "'";
+        String sql = "update zxkc_yw_hpxx set HPMC=?,BZGG=?,DW=?,ZXDW=?,XGSJ=?,DWZHL=?,DJ=?,ZXKC=? where DR=0 and UKEY='" + model.getUkey() + "'";
         Connection conn = DSFactory.CURRENT.getConn();
         PreparedStatement pstmt = null;
         try {
@@ -102,6 +104,7 @@ public class ZxkcHplrDao {
             pstmt.setTimestamp(5, new Timestamp(new java.util.Date().getTime()));
             pstmt.setBigDecimal(6, model.getDwzhl());
             pstmt.setString(7, model.getDj());
+            pstmt.setBigDecimal(8, model.getZxkc());
             pstmt.executeUpdate();
         } finally {
             DaoUtils.close(conn, pstmt, null);

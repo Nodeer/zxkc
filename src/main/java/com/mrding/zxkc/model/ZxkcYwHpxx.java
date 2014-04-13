@@ -24,8 +24,15 @@ public class ZxkcYwHpxx {
     private BigDecimal dwzhl;
     private String dj;
     private String dwmc;
+    private BigDecimal zxkc;
 
-    public String getDwmc() {
+    public BigDecimal getZxkc() {
+		return zxkc;
+	}
+	public void setZxkc(BigDecimal zxkc) {
+		this.zxkc = zxkc;
+	}
+	public String getDwmc() {
 		return dwmc;
 	}
 	public void setDwmc(String dwmc) {

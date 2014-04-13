@@ -18,6 +18,7 @@
 				}, {	
 					columnWidth: 0.3, labelWidth: 80, labelAlign: 'right', layout: 'form', border: false, items: [
 						unitComboBox,
+						{xtype:"numberfield", id:"zxkc", name:"zxkc", fieldLabel:"<font color='red'>*</font>最小库存", anchor:"90%"}
 					]
 				},{	
 					columnWidth: 0.3, labelWidth: 80, labelAlign: 'right', layout: 'form', border: false, items: [
@@ -62,6 +63,7 @@
 	function fnInitAddWindow() {
         Ext.getCmp("hpmc").setValue("");
         Ext.getCmp("dw").setValue("");
+        Ext.getCmp("zxkc").setValue("");
         Ext.getCmp("bzgg").setValue("");
         Ext.getCmp("ukey").setValue("");
         Ext.getCmp("dj").setValue("");
@@ -78,6 +80,10 @@
 		}
 		if (fnIsBlank(Ext.getCmp("dw").getValue())) {
 			Ext.Msg.alert("系统提示", "单位不能为空！");
+			return false;
+		}
+		if (fnIsBlank(Ext.getCmp("zxkc").getValue())) {
+			Ext.Msg.alert("系统提示", "最小库存不能为空！");
 			return false;
 		}
 		if (fnIsBlank(Ext.getCmp("dj").getValue())) {
@@ -99,7 +105,7 @@
 		var gridStore = new Ext.data.JsonStore({
 			url: '${ctxPath}/jhlr/hplr_listHpxx.shtml',
 			root: 'hpxxList',
-			fields: ['ukey', 'hpbh', 'hpmc', 'bzgg', 'dw', 'zxdw', 'dwzhl', 'dj', 'ts', 'dwmc']
+			fields: ['ukey', 'hpbh', 'hpmc', 'bzgg', 'dw', 'dwmc', 'zxkc', 'dj', 'ts', ]
 		});
 		gridStore.load();
 		
@@ -117,6 +123,7 @@
 				{header: '包装规格', dataIndex: 'bzgg', width: 200},
 				{header: 'dw', dataIndex: 'dw', hidden:true},
 				{header: '单位', dataIndex: 'dwmc', width: 80},
+				{header: '最小库存', dataIndex: 'zxkc', width: 90},
 				{header: '单价', dataIndex: 'dj', width: 80},
 				{header: '录入时间', dataIndex: 'ts', width: 300, renderer: new Ext.util.Format.dateRenderer('Y-m-d H:m:s'), sortable: true},
 			],
@@ -146,6 +153,7 @@
 						}
 						Ext.getCmp("hpmc").setValue(hpxxBean.get("hpmc"));
 						Ext.getCmp("dw").setValue(hpxxBean.get("dw"));
+						Ext.getCmp("zxkc").setValue(hpxxBean.get("zxkc"));
 						Ext.getCmp("bzgg").setValue(hpxxBean.get("bzgg"));
 						Ext.getCmp("ukey").setValue(hpxxBean.get("ukey"));
 						Ext.getCmp("dj").setValue(hpxxBean.get("dj"));

@@ -72,6 +72,7 @@ public class IndexAction implements ModelDriven<IndexVo> {
 	    } else if (id.equals("cxtj")) {
 		rtnList.add(TreeNode.createLeaf("库存查询", "kccx", "/cxtj/kccx_list.shtml"));
 		rtnList.add(TreeNode.createLeaf("营销统计", "xstj", "/cxtj/yxtj_list.shtml"));
+		rtnList.add(TreeNode.createLeaf("库存提醒", "kctx", "/cxtj/kctx_list.shtml"));
 	    }
 	} 
         return rtnList;
